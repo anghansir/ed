@@ -317,6 +317,7 @@ public class Interfaz implements ActionListener{
                             jt2.setText("");
                             tipOp = 1;
                         }
+                        
                         else {
                             if(!t){//validacion para nueva operacion
                                 n1 = Float.parseFloat(jt2.getText());                    
