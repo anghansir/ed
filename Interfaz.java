@@ -17,6 +17,7 @@ public class Interfaz implements ActionListener{
     int tipOp; //para controlar el tipo de operacion que se realiza
     boolean t=false;//control sobre escribir un nuevo numero despues de alguna operacion cambia a true cuando se ha realizado una operacion
 
+    
     public Interfaz(){
 
         JFrame jfMain = new JFrame("Calculator");
