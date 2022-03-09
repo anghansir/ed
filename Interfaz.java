@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-
+//Prueba commit
 public class Interfaz implements ActionListener{
 
     JTextField pantallaSup, pantallaInf;                                                                                                                                         //campo de texto 1 y 2 
