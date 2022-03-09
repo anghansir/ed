@@ -1,3 +1,8 @@
+/**
+ * @author Angel Luis Hans Siria
+ * @version 1.0
+ */
+
 package calculadoragui;
 
 import java.util.logging.Level;

@@ -1,4 +1,10 @@
+/**
+ * @author Angel Luis Hans Siria
+ * @version 1.0
+ */
+
 package calculadoragui;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -35,7 +41,9 @@ public class Interfaz implements ActionListener{
         jfMain.setSize(300, 380);
         jfMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
+/**
+ * En este metodo norte se crea el panel de las pantallas, dentro de este panel encontramos dos JTextField
+ */
     public void norte(){
 
         panPantalla = new Panel(null);        
@@ -66,7 +74,12 @@ public class Interfaz implements ActionListener{
         panPantalla.setVisible(true);
 
     }
-
+/**
+ * En este metodo sur se crea el panel del teclado donde dentro contendra:
+ * <br>- Panel de botones de memoria
+ *  <br>- Panel de numeros
+ *  <br>- Panel de Operaciones
+ */
     public void sur(){
 
         panTeclado = new JPanel(new BorderLayout(6, 50));
@@ -83,6 +96,10 @@ public class Interfaz implements ActionListener{
         panTeclado.setSize(270, 330);
     }
 
+    
+    /**
+     * En este método encontramos los botones de Memoria, se le asignara el tipo de letra, el tamaño y la posición de los mismos
+     */
     public void botMem(){
 
         panBotMemo = new Panel(null);
@@ -113,6 +130,10 @@ public class Interfaz implements ActionListener{
         panBotMemo.setVisible(true);        
     }
 
+ /**
+  * El método botNum es el encargado de generar los botones numéricos del 0 al 9, los posiciona dentro del panNumeros
+  */
+    
     public void botNum(){
 
         panNumeros = new JPanel(null);
@@ -169,7 +190,10 @@ public class Interfaz implements ActionListener{
         panNumeros.setSize(170, 150);
         panNumeros.setVisible(true);
     }
-
+/**
+ * El método botOpe es el encargado de crear un nuevo panel e insertar en el los botones de las diferentes operaciones que se encuentra en el array de operadores
+ * los posiciona y los mete dentro de panBotOpe
+ */
     public void botOpe(){
 
         panBotOpe = new Panel(null);
@@ -226,6 +250,12 @@ public class Interfaz implements ActionListener{
         panBotOpe.setSize(120, 200);
     }
 
+ /**
+  * Este metodo es el encargado de comprobar que un valor de String es entero. 
+  * @param ax Recibe un String
+  * @return devuelve true si es un Int o false si no lo es
+  */
+    
     public boolean isN(String ax){
 
         try{
@@ -238,6 +268,11 @@ public class Interfaz implements ActionListener{
     }
 
     @Override
+    
+ /**
+  * Esta función es la que lleva la operativa de la calculadora y sobre la que hemos actuado refactorizando y sacando las operaciones en métodos independientes para 
+  * su reutilización.
+  */
     public void actionPerformed(ActionEvent e) {
 
         String  op="";
@@ -313,51 +348,63 @@ public class Interfaz implements ActionListener{
             
             operacionMultiplicar(e);
             operacionDividir(e);
-                if(e.getActionCommand().equals("=") && !pantallaInf.getText().equals("")){
-                    t = true;
-                    if(tipOp==1){//operacion para la suma
-                        tipOp = 0;
-                        ax="";
-                        ax+=pantallaSup.getText() + pantallaInf.getText();
-                        pantallaSup.setText(ax);
-                        digito2 = Float.parseFloat(pantallaInf.getText());
-                        resultado=digito1+digito2;
-                        pantallaInf.setText(String.valueOf(resultado));
-                    }
-                    else if(tipOp==2){ //operacion para la resta
-                        tipOp = 0;
-                        ax="";
-                        ax+=pantallaSup.getText()+pantallaInf.getText();
-                        pantallaSup.setText(ax);
-                        digito2 = Float.parseFloat(pantallaInf.getText());
-                        resultado=digito1-digito2;
-                        pantallaInf.setText(String.valueOf(resultado));
-                    }
-                    if(tipOp==3){ //operacion para la multiplicacion
-                        tipOp = 0;
-                        ax="";
-                        ax+=pantallaSup.getText()+pantallaInf.getText();
-                        pantallaSup.setText(ax);
-                        digito2 = Float.parseFloat(pantallaInf.getText());
-                        resultado=digito1*digito2;
-                        pantallaInf.setText(String.valueOf(resultado));
-                    }
-                    if(tipOp==4){ //operacion para la division
-                        if(Float.parseFloat(pantallaInf.getText())!=0){
-                            tipOp = 0;
-                            ax="";
-                            ax+=pantallaSup.getText()+pantallaInf.getText();
-                            pantallaSup.setText(ax);
-                            digito2 = Float.parseFloat(pantallaInf.getText());
-                            resultado=digito1/digito2;
-                            pantallaInf.setText(String.valueOf(resultado));
-                        }
-                        
-                    }
-                }
+            operacionResultado(e);
         }        
     }       
-
+/**
+ * Este metodo es el encargado de generar el resultado y mostrarlo en pantalla
+ * @param e Recibe el ActionEventent de la función actionPerformed
+ * @throws NumberFormatException Lanza la excepción NumberFormatException
+ */
+    public void operacionResultado(ActionEvent e) throws NumberFormatException {
+        if(e.getActionCommand().equals("=") && !pantallaInf.getText().equals("")){
+            t = true;
+            if(tipOp==1){//operacion para la suma
+                tipOp = 0;
+                ax="";
+                ax+=pantallaSup.getText() + pantallaInf.getText();
+                pantallaSup.setText(ax);
+                digito2 = Float.parseFloat(pantallaInf.getText());
+                resultado=digito1+digito2;
+                pantallaInf.setText(String.valueOf(resultado));
+            }
+            else if(tipOp==2){ //operacion para la resta
+                tipOp = 0;
+                ax="";
+                ax+=pantallaSup.getText()+pantallaInf.getText();
+                pantallaSup.setText(ax);
+                digito2 = Float.parseFloat(pantallaInf.getText());
+                resultado=digito1-digito2;
+                pantallaInf.setText(String.valueOf(resultado));
+            }
+            if(tipOp==3){ //operacion para la multiplicacion
+                tipOp = 0;
+                ax="";
+                ax+=pantallaSup.getText()+pantallaInf.getText();
+                pantallaSup.setText(ax);
+                digito2 = Float.parseFloat(pantallaInf.getText());
+                resultado=digito1*digito2;
+                pantallaInf.setText(String.valueOf(resultado));
+            }
+            if(tipOp==4){ //operacion para la division
+                if(Float.parseFloat(pantallaInf.getText())!=0){
+                    tipOp = 0;
+                    ax="";
+                    ax+=pantallaSup.getText()+pantallaInf.getText();
+                    pantallaSup.setText(ax);
+                    digito2 = Float.parseFloat(pantallaInf.getText());
+                    resultado=digito1/digito2;
+                    pantallaInf.setText(String.valueOf(resultado));
+                }
+                
+            }
+        }
+    }
+/**
+ * Este metodo es el encargado de realizar la operación suma
+ * @param e Recibe el ActionEventent de la función actionPerformed
+ * @throws NumberFormatException Lanza la excepción NumberFormatException
+ */
     public void operacionSuma(ActionEvent e) throws NumberFormatException {
         if(e.getActionCommand().equals("+") ){//boton suma
             numeros[10].setEnabled(true);
@@ -393,6 +440,11 @@ public class Interfaz implements ActionListener{
         }
     }
 
+    /**
+     * En esta función se llevará a cabo la operación de multiplicación
+     * @param e Recibe el ActionEventent de la función actionPerformed
+     * @throws NumberFormatException Lanza la excepción NumberFormatException
+     */
     public void operacionMultiplicar(ActionEvent e) throws NumberFormatException {
         if(e.getActionCommand().equals("*") ){//cuando se decide multiplicar
             numeros[10].setEnabled(true);
@@ -427,6 +479,11 @@ public class Interfaz implements ActionListener{
         }
     }
 
+    /**
+     * En esta función se llevará a cabo la operación de división
+     * @param e Recibe el ActionEventent de la función actionPerformed
+     * @throws NumberFormatException Lanza la excepción NumberFormatException
+     */
     public void operacionDividir(ActionEvent e) throws NumberFormatException {
         if(e.getActionCommand().equals("/") ){//cuando se decide dividir
             numeros[10].setEnabled(true);
@@ -460,7 +517,11 @@ public class Interfaz implements ActionListener{
             }
         }
     }
-
+    /**
+     * En esta función se llevará a cabo la operación de resta
+     * @param e Recibe el ActionEventent de la función actionPerformed
+     * @throws NumberFormatException Lanza la excepción NumberFormatException
+     */
     public void operacionResta(ActionEvent e) throws NumberFormatException {
         if(e.getActionCommand().equals("-") ){//cuando se decide restar
             numeros[10].setEnabled(true);
