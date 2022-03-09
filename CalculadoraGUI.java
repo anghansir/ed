@@ -15,6 +15,7 @@ public class CalculadoraGUI {
       try {
             UIManager.setLookAndFeel(actualName);
             Interfaz w = new Interfaz();
+            
                 // TODO code application logic here
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
