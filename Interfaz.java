@@ -8,13 +8,13 @@ import javax.swing.*;
 
 public class Interfaz implements ActionListener{
 
-    JTextField jt1, jt2;  //campo de texto 1 y 2 
-    Panel pN, pb1, pb3; // pantalla, botones memoria y botones operaciones
-    JPanel pS, pb2;  /// teclado y botonesnumericos
-    JButton mc, mr, ms, mMas, mMenos, numeros[], operaciones[]; // Lo dejaria igual
-    String oper[]={"R", "C", "+", "/", "-" ,"*", "="},  ax="";  // operaciones
-    float n1, n2, nr, M;//variables para las operaciones  //n1 y n2 son los numero de las operaciones, nr numero resultado, M memoria
-    int tipOp; //para controlar el tipo de operacion que se realiza
+    JTextField pantallaSup, pantallaInf;                                                                                                                                         //campo de texto 1 y 2 
+    Panel panPantalla, panBotMemo, panBotOpe;                                                                                                                                     // pantalla, botones memoria y botones operaciones
+    JPanel panTeclado, panNumeros;                                                                                                                                                 /// teclado y botonesnumericos
+    JButton mc, mr, ms, mMas, mMenos, numeros[], operaciones[];                                                                 // Lo dejaria igual
+    String operadores[]={"R", "C", "+", "/", "-" ,"*", "="},  ax="";                                                                                   // operaciones
+    float digito1, digito2, resultado, memoria;                                                                                                                                            //variables para las operaciones  //n1 y digito2 son los numero de las operaciones, resultado numero resultado, memoria memoria
+    int tipOp;                                                                                                                                                       //para controlar el tipo de operacion que se realiza
     boolean t=false;//control sobre escribir un nuevo numero despues de alguna operacion cambia a true cuando se ha realizado una operacion
 
     
@@ -26,8 +26,8 @@ public class Interfaz implements ActionListener{
         norte();
         sur();
 
-        jfMain.add(pN, BorderLayout.NORTH);
-        jfMain.add(pS, BorderLayout.CENTER);
+        jfMain.add(panPantalla, BorderLayout.NORTH);
+        jfMain.add(panTeclado, BorderLayout.CENTER);
 
         jfMain.setLocation(100, 80);
         jfMain.setResizable(false);
@@ -38,54 +38,54 @@ public class Interfaz implements ActionListener{
 
     public void norte(){
 
-        pN = new Panel(null);        
+        panPantalla = new Panel(null);        
 
-        jt1 = new JTextField("");
-        jt2 = new JTextField("0");
+        pantallaSup = new JTextField("");
+        pantallaInf = new JTextField("0");
 
-        jt1.setHorizontalAlignment(JTextField.RIGHT); 
-        jt2.setHorizontalAlignment(JTextField.RIGHT); 
+        pantallaSup.setHorizontalAlignment(JTextField.RIGHT); 
+        pantallaInf.setHorizontalAlignment(JTextField.RIGHT); 
 
         //Quitar bordes a los campos de texto
-        jt1.setBorder(BorderFactory.createLineBorder(Color.white));
-        jt2.setBorder(BorderFactory.createLineBorder(Color.white));
+        pantallaSup.setBorder(BorderFactory.createLineBorder(Color.white));
+        pantallaInf.setBorder(BorderFactory.createLineBorder(Color.white));
 
         //desabilitando los campos de texto
-        jt1.setEditable(false);
-        jt2.setEditable(false);
+        pantallaSup.setEditable(false);
+        pantallaInf.setEditable(false);
 
-        jt1.setBackground(Color.white);
-        jt2.setBackground(Color.white);
+        pantallaSup.setBackground(Color.white);
+        pantallaInf.setBackground(Color.white);
 
-        pN.add(jt1); pN.add(jt2);
+        panPantalla.add(pantallaSup); panPantalla.add(pantallaInf);
 
-        jt1.setBounds(35, 10, 200, 15);
-        jt2.setBounds(35, 25, 200, 30);
+        pantallaSup.setBounds(35, 10, 200, 15);
+        pantallaInf.setBounds(35, 25, 200, 30);
 
-        pN.setSize(270, 47);
-        pN.setVisible(true);
+        panPantalla.setSize(270, 47);
+        panPantalla.setVisible(true);
 
     }
 
     public void sur(){
 
-        pS = new JPanel(new BorderLayout(6, 50));
-        pS.setLayout(new BorderLayout(4, 4));
+        panTeclado = new JPanel(new BorderLayout(6, 50));
+        panTeclado.setLayout(new BorderLayout(4, 4));
 
         botMem();
         botNum();
         botOpe();
 
-        pS.add(pb1, BorderLayout.NORTH);  
-        pS.add(pb2, BorderLayout.CENTER); 
-        pS.add(pb3, BorderLayout.EAST); 
+        panTeclado.add(panBotMemo, BorderLayout.NORTH);  
+        panTeclado.add(panNumeros, BorderLayout.CENTER); 
+        panTeclado.add(panBotOpe, BorderLayout.EAST); 
 
-        pS.setSize(270, 330);
+        panTeclado.setSize(270, 330);
     }
 
     public void botMem(){
 
-        pb1 = new Panel(null);
+        panBotMemo = new Panel(null);
 
         mc = new JButton("MC");  mr = new JButton("MR");
         ms = new JButton("MS"); mMas = new JButton("M+");
@@ -104,18 +104,18 @@ public class Interfaz implements ActionListener{
         mc.setBounds(35, 0, 33, 33); mr.setBounds(78, 0, 33, 33); ms.setBounds(121, 0, 33, 33);
         mMas.setBounds(164, 0, 33, 33); mMenos.setBounds(207, 0, 33, 33);
 
-        pb1.add(mc); pb1.add(mr); pb1.add(ms); pb1.add(mMas); pb1.add(mMenos);
+        panBotMemo.add(mc); panBotMemo.add(mr); panBotMemo.add(ms); panBotMemo.add(mMas); panBotMemo.add(mMenos);
 
         mc.addActionListener(this); mr.addActionListener(this); ms.addActionListener(this);
         mMas.addActionListener(this); mMenos.addActionListener(this);
 
-        pb1.setSize(270, 45);
-        pb1.setVisible(true);        
+        panBotMemo.setSize(270, 45);
+        panBotMemo.setVisible(true);        
     }
 
     public void botNum(){
 
-        pb2 = new JPanel(null);
+        panNumeros = new JPanel(null);
 
         int nx3=121, nx2=121, nx1=121, n3y=0, n2y=43, n1y=86;
         numeros = new JButton[11];
@@ -126,13 +126,13 @@ public class Interfaz implements ActionListener{
 
             if(i<=9){
                 numeros[i] = new JButton(""+i);
-                pb2.add(numeros[i]);
+                panNumeros.add(numeros[i]);
                 numeros[i].setMargin(new Insets(1, 1, 1, 1));
                 numeros[i].addActionListener(this);  
             }
             else{
                 numeros[i] = new JButton(".");
-                pb2.add(numeros[i]);
+                panNumeros.add(numeros[i]);
                 numeros[i].setMargin(new Insets(1, 1, 1, 1));
                 numeros[i].addActionListener(this);
             }
@@ -166,13 +166,13 @@ public class Interfaz implements ActionListener{
             }                
         }
 
-        pb2.setSize(170, 150);
-        pb2.setVisible(true);
+        panNumeros.setSize(170, 150);
+        panNumeros.setVisible(true);
     }
 
     public void botOpe(){
 
-        pb3 = new Panel(null);
+        panBotOpe = new Panel(null);
 
         int c=0, x=0, y=0;
 
@@ -181,8 +181,8 @@ public class Interfaz implements ActionListener{
         for(int i=0; i<=6; i++){
             if(c<=1){
 
-                operaciones[i] = new JButton(oper[i]);
-                pb3.add(operaciones[i]);
+                operaciones[i] = new JButton(operadores[i]);
+                panBotOpe.add(operaciones[i]);
 
                     operaciones[i].setBounds(x, y, 30, 35);
 
@@ -194,8 +194,8 @@ public class Interfaz implements ActionListener{
             else{
                 if(i==6){
                     x=0; y+=43;
-                    operaciones[i] = new JButton(oper[i]);
-                    pb3.add(operaciones[i]);
+                    operaciones[i] = new JButton(operadores[i]);
+                    panBotOpe.add(operaciones[i]);
 
                     operaciones[i].setBounds(x, y, 65, 35);
 
@@ -207,8 +207,8 @@ public class Interfaz implements ActionListener{
                 else{
                     c=0;
                     x=0; y+=43;
-                    operaciones[i] = new JButton(oper[i]);
-                    pb3.add(operaciones[i]);
+                    operaciones[i] = new JButton(operadores[i]);
+                    panBotOpe.add(operaciones[i]);
 
                     operaciones[i].setBounds(x, y, 30, 35);
 
@@ -221,8 +221,9 @@ public class Interfaz implements ActionListener{
 
         }
 
-        pb3.setVisible(true);
-        pb3.setSize(120, 200);
+        panBotOpe.setVisible(true);
+        
+        panBotOpe.setSize(120, 200);
     }
 
     public boolean isN(String ax){
@@ -243,148 +244,154 @@ public class Interfaz implements ActionListener{
 
         if(isN(e.getActionCommand())){ //cuando se oprimen numeros
 
-            if(jt1.getText().equals("")){
+            if(pantallaSup.getText().equals("")){
                 ax += e.getActionCommand();
-                jt2.setText(ax);
+                pantallaInf.setText(ax);
             }
             else{
                 if(tipOp==0){
                     if(t){
                         ax=""; 
 
-                        jt1.setText(jt2.getText());                        
+                        pantallaSup.setText(pantallaInf.getText());                        
                         ax += e.getActionCommand();
-                        jt2.setText(ax);    
+                        pantallaInf.setText(ax);    
                         t = false;
                     }
                     else{
                         ax="";
-                        ax += jt2.getText()+e.getActionCommand();
-                        jt2.setText(ax);
+                        ax += pantallaInf.getText()+e.getActionCommand();
+                        pantallaInf.setText(ax);
                     }                
                 }else{
                     ax="";
-                    ax += jt2.getText()+e.getActionCommand();
-                    jt2.setText(ax);
+                    ax += pantallaInf.getText()+e.getActionCommand();
+                    pantallaInf.setText(ax);
                 }
             }            
         }
         else{//cuando se oprime el resto de botones
 
             if(e.getActionCommand().equals("R") ){
-                jt1.setText("");
-                Float a = Float.parseFloat(jt2.getText());
-                jt2.setText(""+Math.sqrt(a)); 
+                pantallaSup.setText("");
+                Float a = Float.parseFloat(pantallaInf.getText());
+                pantallaInf.setText(""+Math.sqrt(a)); 
             }
             if(e.getActionCommand().equals("C") ){ //para reiniciar valores y limpiar pantalla
-                tipOp=0; n1 = 0; n2 =0; nr=0; jt1.setText(""); jt2.setText("0"); ax="";
+                tipOp=0; digito1 = 0; digito2 =0; resultado=0; pantallaSup.setText(""); pantallaInf.setText("0"); ax="";
             }   
             if(e.getActionCommand().equals("MC")){//para limpiar la memoria de la calculadora
                 ms.setForeground(Color.black);
-                jt1.setText(""); jt2.setText("0");
-                M=0;
+                pantallaSup.setText(""); pantallaInf.setText("0");
+                memoria=0;
             }
             if(e.getActionCommand().equals("MR")){//para mostrar valor almacenado en la memoria
-                jt1.setText("");
-                jt2.setText(String.valueOf(M));
+                pantallaSup.setText("");
+                pantallaInf.setText(String.valueOf(memoria));
             }if(e.getActionCommand().equals("MS")){//guardar un valor en la memoria
                 ms.setForeground(Color.red);
-                M = Float.parseFloat(jt2.getText());
+                memoria = Float.parseFloat(pantallaInf.getText());
             }
             if(e.getActionCommand().equals("M+")){//sumar valor de la pantalla con el valor de la memoria
-                M += Float.parseFloat(jt2.getText());
+                memoria += Float.parseFloat(pantallaInf.getText());
             }
             if(e.getActionCommand().equals("M-")){//restar valor de la pantalla con el valor de la memoria
-                M -= Float.parseFloat(jt2.getText());
+                memoria -= Float.parseFloat(pantallaInf.getText());
             }    
             if(e.getActionCommand().equals(".")){//usar el punto para los decimales
                 ax="";
                 if(numeros[10].isEnabled()){
                     numeros[10].setEnabled(false);
-                    ax = jt2.getText() +".";
-                    jt2.setText(ax);
+                    ax = pantallaInf.getText() +".";
+                    pantallaInf.setText(ax);
                 }
             }
-            if(e.getActionCommand().equals("+") ){//boton suma
-                numeros[10].setEnabled(true);
-                ax="";
-                if(tipOp==1){
-
-                }else if(tipOp==0 ){//validacion para no chocar con otras operaciones
-                        if(jt1.getText().equals("") ){
-                            n1 = Float.parseFloat(jt2.getText());                    
-                            ax += jt1.getText()+jt2.getText();
-                            jt1.setText(ax+" + ");
-                            jt2.setText("");
-                            tipOp = 1;
-                        }
-                        
-                        else {
-                            if(!t){//validacion para nueva operacion
-                                n1 = Float.parseFloat(jt2.getText());                    
-                                ax += jt2.getText();
-                                jt1.setText(ax+" + ");
-                                jt2.setText("");
-                                tipOp = 1;
-                            }
-                            else{//usar otras operaciones con la suma
-                                n1 = Float.parseFloat(jt2.getText());                    
-                                ax += jt1.getText();
-                                jt1.setText(ax+" + ");
-                                jt2.setText("");
-                                tipOp = 1;
-                            }
-                        }
-                    }                     
-             }
+            
+            operacionSuma(e);
+            
             operacionResta(e);
             
             operacionMultiplicar(e);
             operacionDividir(e);
-                if(e.getActionCommand().equals("=") && !jt2.getText().equals("")){
+                if(e.getActionCommand().equals("=") && !pantallaInf.getText().equals("")){
                     t = true;
                     if(tipOp==1){//operacion para la suma
                         tipOp = 0;
                         ax="";
-                        ax+=jt1.getText() + jt2.getText();
-                        jt1.setText(ax);
-                        n2 = Float.parseFloat(jt2.getText());
-                        nr=n1+n2;
-                        jt2.setText(String.valueOf(nr));
+                        ax+=pantallaSup.getText() + pantallaInf.getText();
+                        pantallaSup.setText(ax);
+                        digito2 = Float.parseFloat(pantallaInf.getText());
+                        resultado=digito1+digito2;
+                        pantallaInf.setText(String.valueOf(resultado));
                     }
                     else if(tipOp==2){ //operacion para la resta
                         tipOp = 0;
                         ax="";
-                        ax+=jt1.getText()+jt2.getText();
-                        jt1.setText(ax);
-                        n2 = Float.parseFloat(jt2.getText());
-                        nr=n1-n2;
-                        jt2.setText(String.valueOf(nr));
+                        ax+=pantallaSup.getText()+pantallaInf.getText();
+                        pantallaSup.setText(ax);
+                        digito2 = Float.parseFloat(pantallaInf.getText());
+                        resultado=digito1-digito2;
+                        pantallaInf.setText(String.valueOf(resultado));
                     }
                     if(tipOp==3){ //operacion para la multiplicacion
                         tipOp = 0;
                         ax="";
-                        ax+=jt1.getText()+jt2.getText();
-                        jt1.setText(ax);
-                        n2 = Float.parseFloat(jt2.getText());
-                        nr=n1*n2;
-                        jt2.setText(String.valueOf(nr));
+                        ax+=pantallaSup.getText()+pantallaInf.getText();
+                        pantallaSup.setText(ax);
+                        digito2 = Float.parseFloat(pantallaInf.getText());
+                        resultado=digito1*digito2;
+                        pantallaInf.setText(String.valueOf(resultado));
                     }
                     if(tipOp==4){ //operacion para la division
-                        if(Float.parseFloat(jt2.getText())!=0){
+                        if(Float.parseFloat(pantallaInf.getText())!=0){
                             tipOp = 0;
                             ax="";
-                            ax+=jt1.getText()+jt2.getText();
-                            jt1.setText(ax);
-                            n2 = Float.parseFloat(jt2.getText());
-                            nr=n1/n2;
-                            jt2.setText(String.valueOf(nr));
+                            ax+=pantallaSup.getText()+pantallaInf.getText();
+                            pantallaSup.setText(ax);
+                            digito2 = Float.parseFloat(pantallaInf.getText());
+                            resultado=digito1/digito2;
+                            pantallaInf.setText(String.valueOf(resultado));
                         }
                         
                     }
                 }
         }        
     }       
+
+    public void operacionSuma(ActionEvent e) throws NumberFormatException {
+        if(e.getActionCommand().equals("+") ){//boton suma
+            numeros[10].setEnabled(true);
+            ax="";
+            if(tipOp==1){
+                
+            }else if(tipOp==0 ){//validacion para no chocar con otras operaciones
+                if(pantallaSup.getText().equals("") ){
+                    digito1 = Float.parseFloat(pantallaInf.getText());
+                    ax += pantallaSup.getText()+pantallaInf.getText();
+                    pantallaSup.setText(ax+" + ");
+                    pantallaInf.setText("");
+                    tipOp = 1;
+                }
+                
+                else {
+                    if(!t){//validacion para nueva operacion
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaInf.getText();
+                        pantallaSup.setText(ax+" + ");
+                        pantallaInf.setText("");
+                        tipOp = 1;
+                    }
+                    else{//usar otras operaciones con la suma
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaSup.getText();
+                        pantallaSup.setText(ax+" + ");
+                        pantallaInf.setText("");
+                        tipOp = 1;
+                    }
+                }
+            }
+        }
+    }
 
     public void operacionMultiplicar(ActionEvent e) throws NumberFormatException {
         if(e.getActionCommand().equals("*") ){//cuando se decide multiplicar
@@ -393,26 +400,26 @@ public class Interfaz implements ActionListener{
             if(tipOp==3){
                 
             }else if(tipOp==0){//validacion para no chocar con otras operaciones
-                if(jt1.getText().equals("")){
-                    n1 = Float.parseFloat(jt2.getText());
-                    ax += jt1.getText()+jt2.getText();
-                    jt1.setText(ax+" * ");
-                    jt2.setText("");
+                if(pantallaSup.getText().equals("")){
+                    digito1 = Float.parseFloat(pantallaInf.getText());
+                    ax += pantallaSup.getText()+pantallaInf.getText();
+                    pantallaSup.setText(ax+" * ");
+                    pantallaInf.setText("");
                     tipOp = 3;
                 }
                 else{
                     if(!t){//validacion para nueva operacion
-                        n1 = Float.parseFloat(jt2.getText());
-                        ax += jt2.getText();
-                        jt1.setText(ax+" * ");
-                        jt2.setText("");
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaInf.getText();
+                        pantallaSup.setText(ax+" * ");
+                        pantallaInf.setText("");
                         tipOp = 3;
                     }
                     else{//usar otras operaciones con la suma
-                        n1 = Float.parseFloat(jt2.getText());
-                        ax += jt1.getText();
-                        jt1.setText(ax+" * ");
-                        jt2.setText("");
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaSup.getText();
+                        pantallaSup.setText(ax+" * ");
+                        pantallaInf.setText("");
                         tipOp = 3;
                     }
                 }
@@ -427,26 +434,26 @@ public class Interfaz implements ActionListener{
             if(tipOp==4){
                 
             }else if(tipOp==0){//validacion para no chocar con otras operaciones
-                if(jt1.getText().equals("")){
-                    n1 = Float.parseFloat(jt2.getText());
-                    ax += jt1.getText()+jt2.getText();
-                    jt1.setText(ax+" / ");
-                    jt2.setText("");
+                if(pantallaSup.getText().equals("")){
+                    digito1 = Float.parseFloat(pantallaInf.getText());
+                    ax += pantallaSup.getText()+pantallaInf.getText();
+                    pantallaSup.setText(ax+" / ");
+                    pantallaInf.setText("");
                     tipOp = 4;
                 }
                 else{
                     if(!t){//validacion para nueva operacion
-                        n1 = Float.parseFloat(jt2.getText());
-                        ax += jt2.getText();
-                        jt1.setText(ax+" / ");
-                        jt2.setText("");
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaInf.getText();
+                        pantallaSup.setText(ax+" / ");
+                        pantallaInf.setText("");
                         tipOp = 4;
                     }
                     else{//usar otras operaciones con la suma
-                        n1 = Float.parseFloat(jt2.getText());
-                        ax += jt1.getText();
-                        jt1.setText(ax+" / ");
-                        jt2.setText("");
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaSup.getText();
+                        pantallaSup.setText(ax+" / ");
+                        pantallaInf.setText("");
                         tipOp = 4;
                     }
                 }
@@ -461,26 +468,26 @@ public class Interfaz implements ActionListener{
             if(tipOp==2){
                 
             }else if(tipOp==0){//validacion para no chocar con otras operaciones
-                if(jt1.getText().equals("")){
-                    n1 = Float.parseFloat(jt2.getText());
-                    ax += jt1.getText()+ jt2.getText();
-                    jt1.setText(ax+" - ");
-                    jt2.setText("");
+                if(pantallaSup.getText().equals("")){
+                    digito1 = Float.parseFloat(pantallaInf.getText());
+                    ax += pantallaSup.getText()+ pantallaInf.getText();
+                    pantallaSup.setText(ax+" - ");
+                    pantallaInf.setText("");
                     tipOp = 2;
                 }
                 else{
                     if(!t){//validacion para nueva operacion
-                        n1 = Float.parseFloat(jt2.getText());
-                        ax += jt2.getText();
-                        jt1.setText(ax+" - ");
-                        jt2.setText("");
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaInf.getText();
+                        pantallaSup.setText(ax+" - ");
+                        pantallaInf.setText("");
                         tipOp = 2;
                     }
                     else{//usar otras operaciones con la suma
-                        n1 = Float.parseFloat(jt2.getText());
-                        ax += jt1.getText();
-                        jt1.setText(ax+" - ");
-                        jt2.setText("");
+                        digito1 = Float.parseFloat(pantallaInf.getText());
+                        ax += pantallaSup.getText();
+                        pantallaSup.setText(ax+" - ");
+                        pantallaInf.setText("");
                         tipOp = 2;
                     }
                 }
